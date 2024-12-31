@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CarouselComponent from "@/components/home/Carousel";
 import products from "../components/store/cartData.json";
 import CartHome from "@/components/home/CartHome";
 import { FaGlobe, FaLeaf, FaDrumstickBite } from "react-icons/fa";
-const index = () => {
+
+const Index = () => {
   const [SelectOption, setSelectOption] = useState("All");
   let categories = new Set();
   let foodData = [];
 
-
   const handleData = () => {
-    products.map((data) => {
-      return foodData.push(data), categories.add(data?.category);
+    products.forEach((data) => {
+      foodData.push(data);
+      categories.add(data?.category);
     });
   };
 
@@ -54,17 +55,13 @@ const index = () => {
               ? foodDataStore
               : foodDataStore.filter((data) => SelectOption === data.foodType);
           return (
-            <>
-              <div
-                key={value}
-                className="text-4xl mt-10  mb-3 uppercase font-bold"
-              >
+            <React.Fragment key={value}>
+              <div className="text-4xl mt-10  mb-3 uppercase font-bold">
                 {value}
               </div>
               <hr />
-
               <CartHome products={StoreNewData} SelectOption={SelectOption} />
-            </>
+            </React.Fragment>
           );
         })}
       </>
@@ -72,4 +69,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
