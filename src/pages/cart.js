@@ -1,335 +1,121 @@
-// import React from "react";
-// import { FaTrashAlt } from "react-icons/fa"; // Trash icon for removing items
-
-// // Sample cart data (You can replace this with state or props from a global store)
-// const cartItems = [
-//   {
-//     id: 1,
-//     name: "Pizza Margherita",
-//     price: 12.99,
-//     quantity: 2,
-//     image: "https://via.placeholder.com/150?text=Margherita", // Placeholder image
-//     description: "Classic Margherita pizza with mozzarella and basil.",
-//   },
-//   {
-//     id: 2,
-//     name: "Pepperoni Pizza",
-//     price: 15.99,
-//     quantity: 1,
-//     image: "https://via.placeholder.com/150?text=Pepperoni", // Placeholder image
-//     description: "Delicious pepperoni pizza topped with extra cheese.",
-//   },
-//   {
-//     id: 3,
-//     name: "Veggie Pizza",
-//     price: 14.49,
-//     quantity: 3,
-//     image: "https://via.placeholder.com/150?text=Veggie", // Placeholder image
-//     description: "A healthy veggie pizza with mushrooms, peppers, and olives.",
-//   },
-//   {
-//     id: 4,
-//     name: "BBQ Chicken Pizza",
-//     price: 18.99,
-//     quantity: 1,
-//     image: "https://via.placeholder.com/150?text=BBQ+Chicken", // Placeholder image
-//     description: "BBQ chicken pizza with smoky barbecue sauce and onions.",
-//   },
-// ];
-
-// const Cart = () => {
-//   // Calculate total price
-//   const totalPrice = cartItems.reduce(
-//     (acc, item) => acc + item.price * item.quantity,
-//     0
-//   );
-
-//   return (
-//     <div className="container mx-auto py-8 px-4">
-//       <h1 className="text-3xl font-bold text-center mb-6">Your Cart</h1>
-
-//       {cartItems.length === 0 ? (
-//         <p className="text-center text-lg">Your cart is empty.</p>
-//       ) : (
-//         <div>
-//           {/* Cart Items */}
-//           <div className="mb-6">
-//             {cartItems.map((item) => (
-//               <div
-//                 key={item.id}
-//                 className="flex justify-between items-center border-b py-4"
-//               >
-//                 <div>
-//                   <h2 className="text-xl font-semibold">{item.name}</h2>
-//                   <p className="text-gray-600">Price: ${item.price}</p>
-//                 </div>
-//                 <div className="flex items-center gap-4">
-//                   <span className="text-gray-600">Qty: {item.quantity}</span>
-//                   <button className="text-red-500 hover:text-red-700 transition duration-200">
-//                     <FaTrashAlt />
-//                   </button>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-
-//           {/* Total Price and Checkout Button */}
-//           <div className="flex justify-between items-center mt-6">
-//             <p className="text-xl font-semibold">
-//               Total:{" "}
-//               <span className="text-green-500">${totalPrice.toFixed(2)}</span>
-//             </p>
-//             <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200">
-//               Checkout
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Cart;
-
-// import { CartContext } from "@/components/utils/ContextReducer";
-// import React, { useEffect, useState } from "react";
-// import { useContext } from "react";
-// import { FaTrashAlt } from "react-icons/fa";
-
-// const Cart = () => {
-//   const [cartItems, setCartItems] = useState([]);
-//   const [categories, setCategories] = useState([]);
-//   const [selectedCategory, setSelectedCategory] = useState("All");
-//   const { state } = useContext(CartContext);
-//   console.log("statecarts..", state);
-//   // Load cart items from localStorage after the component mounts
-//   useEffect(() => {
-//     const savedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
-//     setCartItems(savedCart);
-//     const uniqueCategories = [
-//       "All",
-//       ...new Set(savedCart.map((item) => item.category)),
-//     ];
-//     setCategories(uniqueCategories);
-//   }, []);
-
-//   // Save cart items to localStorage whenever cartItems change
-//   useEffect(() => {
-//     if (cartItems.length > 0) {
-//       localStorage.setItem("cartItems", JSON.stringify(cartItems));
-//     }
-//   }, [cartItems]);
-
-//   // Handle removing an item from the cart
-//   const removeFromCart = (id) => {
-//     const updatedCart = cartItems.filter((item) => item.id !== id);
-//     setCartItems(updatedCart);
-//   };
-
-//   // Filter items based on selected category
-//   const filteredItems =
-//     selectedCategory === "All"
-//       ? cartItems
-//       : cartItems.filter((item) => item.category === selectedCategory);
-
-//   // Calculate total price
-//   const totalPrice = filteredItems.reduce(
-//     (acc, item) => acc + item.price * item.quantity,
-//     0
-//   );
-
-//   return (
-//     <>
-//       <div className="container mx-auto py-8 px-4">
-//         <h1 className="text-3xl font-bold text-center mb-6">Your Cart</h1>
-
-//         {/* Category Filter */}
-//         <div className="flex justify-center mb-4">
-//           <select
-//             value={selectedCategory}
-//             onChange={(e) => setSelectedCategory(e.target.value)}
-//             className="border border-gray-300 rounded px-4 py-2"
-//           >
-//             {categories.map((category, index) => (
-//               <option key={index} value={category}>
-//                 {category}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-
-//         {filteredItems.length === 0 ? (
-//           <p className="text-center text-lg">Your cart is empty.</p>
-//         ) : (
-//           <div>
-//             {/* Cart Items */}
-//             <div className="mb-6">
-//               {filteredItems.map((item) => (
-//                 <div
-//                   key={item.id}
-//                   className="flex justify-between items-center border-b py-4"
-//                 >
-//                   <div>
-//                     <h2 className="text-xl font-semibold">{item.name}</h2>
-//                     <p className="text-gray-600">Category: {item.category}</p>
-//                     <p className="text-gray-600">
-//                       Price: ₹{item.price} x {item.quantity}
-//                     </p>
-//                     <p className="text-gray-600">
-//                       Total: ₹{item.price * item.quantity}
-//                     </p>
-//                   </div>
-//                   <button
-//                     className="text-red-500 hover:text-red-700 transition duration-200"
-//                     onClick={() => removeFromCart(item.id)}
-//                   >
-//                     <FaTrashAlt />
-//                   </button>
-//                 </div>
-//               ))}
-//             </div>
-
-//             {/* Total Price and Checkout Button */}
-//             <div className="flex justify-between items-center mt-6">
-//               <p className="text-xl font-semibold">
-//                 Total:{" "}
-//                 <span className="text-green-500">₹{totalPrice.toFixed(2)}</span>
-//               </p>
-//               <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200">
-//                 Checkout
-//               </button>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-
-//     </>
-//   );
-// };
-
-// export default Cart;
-
+import React, { useState, useContext } from "react";
 import { CartContext } from "@/components/utils/ContextReducer";
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 const Cart = () => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const { state, dispatch } = useContext(CartContext);
 
-  // Format the cart items
-  const formattedState = state?.map((item) => ({
-    id: item.id,
-    img: item.img,
-    price: item.price,
-    quantity: item.quantity,
-    size: item.size,
-    tempId: `${item.id}${item.size}`,
-    title: item.title,
-  }));
+  const handleQuantityChange = (id, delta) => {
+    dispatch({
+      type: "UPDATE_QUANTITY",
+      id: id,
+      delta: delta,
+    });
+  };
 
-  console.log("Formatted State:", formattedState);
-
-  // Generate unique categories
-  useEffect(() => {
-    const uniqueCategories = [
-      "All",
-      ...new Set(state.map((item) => item.category || "Uncategorized")),
-    ];
-    setCategories(uniqueCategories);
-  }, [state]);
-
-  // Filter items based on selected category
-  const filteredItems =
-    selectedCategory === "All"
-      ? formattedState
-      : formattedState.filter((item) => item.category === selectedCategory);
-
-  // Calculate total price
-  const totalPrice = filteredItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
-  // Remove item from cart
-  const removeFromCart = (id) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id });
+  const getTotalPrice = () => {
+    return state.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Your Cart</h1>
-
-      {/* Category Filter */}
-      <div className="flex justify-center mb-4">
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border border-gray-300 rounded px-4 py-2"
-        >
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {filteredItems.length === 0 ? (
-        <p className="text-center text-lg">Your cart is empty.</p>
-      ) : (
-        <div>
-          {/* Cart Items */}
-          <div className="mb-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.tempId}
-                className="flex justify-between items-center border-b py-4"
-              >
-                <div>
-                  <h2 className="text-xl font-semibold">{item.title}</h2>
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="w-20 h-20 object-cover my-2"
-                  />
-                  <p className="text-gray-600">
-                    Category: {item.category || "Uncategorized"}
-                  </p>
-                  <p className="text-gray-600">
-                    Price: ₹{item.price} x {item.quantity}
-                  </p>
-                  <p className="text-gray-600">Size: {item.size}</p>
-                  <p className="text-gray-600">Temp ID: {item.tempId}</p>
-                  <p className="text-gray-600">
-                    Total: ₹{(item.price * item.quantity).toFixed(2)}
-                  </p>
-                </div>
-                <button
-                  className="text-red-500 hover:text-red-700 transition duration-200"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  <FaTrashAlt />
-                </button>
-              </div>
-            ))}
+    <>
+      {state.length > 0 ? (
+        <div className="container mx-auto p-4 sm:p-6 h-[70vh]">
+          <h1 className="text-2xl font-bold mb-6 text-center">Your Cart</h1>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-800 text-sm">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  <th className="border border-gray-700 px-4 py-2">Number</th>
+                  <th className="border border-gray-700 px-4 py-2">Image</th>
+                  <th className="border border-gray-700 px-4 py-2">Title</th>
+                  <th className="border border-gray-700 px-4 py-2">Size</th>
+                  <th className="border border-gray-700 px-4 py-2">Price</th>
+                  <th className="border border-gray-700 px-4 py-2">Quantity</th>
+                  <th className="border border-gray-700 px-4 py-2">Subtotal</th>
+                  <th className="border border-gray-700 px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {state.map((item, index) => (
+                  <tr key={item.id} className="hover:bg-blue-900">
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      {index + 1}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="w-16 h-16 object-cover mx-auto"
+                      />
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      {item.title}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      {item.priceOption}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      ₹{item.price}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      <div className="flex items-center justify-center space-x-2">
+                        <button
+                          onClick={() => handleQuantityChange(item.id, -1)}
+                          className="px-2 py-1 bg-gray-700 text-white rounded hover:bg-gray-800"
+                        >
+                          -
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button
+                          onClick={() => handleQuantityChange(item.id, 1)}
+                          className="px-2 py-1 bg-gray-700 text-white rounded hover:bg-gray-800"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      ₹{item.price * item.quantity}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-center">
+                      <button
+                        // onClick={() => handleDelete(item.id)}
+                        onClick={(e) => {
+                          dispatch({ type: "REMOVE", id: item.id });
+                        }}
+                        className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-
-          {/* Total Price and Checkout Button */}
-          <div className="flex justify-between items-center mt-6">
-            <p className="text-xl font-semibold">
-              Total:{" "}
-              <span className="text-green-500">₹{totalPrice.toFixed(2)}</span>
-            </p>
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200">
-              Checkout
+          <div className="mt-6 text-right">
+            <h2 className="text-xl font-bold">
+              Total Price: ₹{getTotalPrice()} /-
+            </h2>
+            <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+              Proceed to Checkout
             </button>
           </div>
         </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-[70vh] text-center bg-gray-100 p-6">
+          <img
+            src="https://i.pinimg.com/736x/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.jpg"
+            alt="Empty Cart"
+            className="w-72 h-auto mb-6 rounded-xl shadow-lg"
+          />
+          <p className="text-xl font-semibold text-gray-600 mt-4 uppercase tracking-wide">
+            Your cart is empty!
+          </p>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

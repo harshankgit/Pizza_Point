@@ -14,7 +14,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-
   return (
     <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">

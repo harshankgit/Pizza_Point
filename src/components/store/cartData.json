@@ -14,10 +14,10 @@
     "img": "https://media-assets.swiggy.com/swiggy/image/upload/f_auto,q_auto,fl_lossy/vbzwuofcxabs6unairxc",
     "title": "Delicious Pizza",
     "category": "Pizza",
-    "foodType": "veg",
+    "foodType": "non-veg",
     "options": ["Regular", "Medium", "Large"],
     "description": "A hugely popular margherita",
-    "price": { "Regular": 199, "Medium": 249, "Large": 299 }
+    "price": { "Regular": 149, "Medium": 249, "Large": 299 }
   },
 
   {
