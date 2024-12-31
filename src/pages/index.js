@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import CarouselComponent from "@/components/home/Carousel";
 import products from "../components/store/cartData.json";
@@ -8,7 +7,7 @@ const index = () => {
   const [SelectOption, setSelectOption] = useState("All");
   let categories = new Set();
   let foodData = [];
-  console.log("products", products);
+
 
   const handleData = () => {
     products.map((data) => {
@@ -18,7 +17,7 @@ const index = () => {
 
   handleData();
   let categoriesArray = [...categories];
-  console.log(categories, foodData), categoriesArray;
+
   return (
     <div>
       <>
@@ -46,7 +45,7 @@ const index = () => {
             Non-Veg
           </button>
         </div>
-        {categoriesArray.map((value, index) => {
+        {categoriesArray.map((value) => {
           const foodDataStore = foodData?.filter(
             (data) => data.category === value
           );
@@ -54,11 +53,10 @@ const index = () => {
             SelectOption === "All"
               ? foodDataStore
               : foodDataStore.filter((data) => SelectOption === data.foodType);
-          console.log(StoreNewData, "StoreNewData");
           return (
             <>
               <div
-                key={index}
+                key={value}
                 className="text-4xl mt-10  mb-3 uppercase font-bold"
               >
                 {value}

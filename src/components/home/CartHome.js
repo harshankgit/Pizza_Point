@@ -9,7 +9,7 @@ const CartHome = ({ products, SelectOption }) => {
       return acc;
     }, {})
   );
-  console.log("cartState", cartState);
+
   const handleSizeChange = (productId, size) => {
     setCartState((prevState) => ({
       ...prevState,
@@ -72,7 +72,7 @@ const CartHome = ({ products, SelectOption }) => {
       });
     }
     if (updateItem) {
-      dispatch({ 
+      dispatch({
         type: "UPDATE",
         tempId: product.id + size,
         price: prices,
@@ -80,7 +80,6 @@ const CartHome = ({ products, SelectOption }) => {
       });
     }
   };
-  console.log("state", state);
 
   return (
     <>
